@@ -162,6 +162,12 @@
     <!-- 予約フォーム本体 -->
     <section class="apple-card form-card">
       <form id="bookingForm" method="POST" target="hidden_iframe" novalidate>
+        <!-- スパムボット対策（ハニーポット: 一般ユーザーには見えず、自動巡回ボットのみが反応して無効化される隠し項目） -->
+        <div class="hp-field" aria-hidden="true" style="position: absolute; left: -9999px; top: -9999px; opacity: 0; height: 0; width: 0; z-index: -1;">
+          <label for="formWebsiteUrl">Website</label>
+          <input type="text" id="formWebsiteUrl" name="website_url" tabindex="-1" autocomplete="off">
+        </div>
+
         <!-- 扱いキャスト（非表示入力） -->
         <input type="hidden" id="inputPerformer" value="安藤理樹">
 

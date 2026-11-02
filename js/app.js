@@ -79,10 +79,8 @@ document.addEventListener("DOMContentLoaded", () => {
       officialSiteLink.href = info.officialUrl;
     }
 
-    // 扱いキャスト（URLパラメータ判定: ?cast= または ?performer= または ?actor=）
-    const params = new URLSearchParams(window.location.search);
-    const paramCast = params.get("cast") || params.get("performer") || params.get("actor");
-    const currentPerformer = paramCast ? decodeURIComponent(paramCast) : info.defaultPerformer;
+    // 扱いキャスト（安藤理樹専用・固定）
+    const currentPerformer = info.defaultPerformer || "安藤理樹";
 
     setText("eventSubtitleText", `${currentPerformer}扱い専用 チケット予約フォーム`);
     setText("confirmPerformer", currentPerformer);
@@ -195,6 +193,13 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function validateAll() {
+    // スパムボット対策: ハニーポットに値が入っている場合は送信処理を無効化
+    const hpField = document.getElementById("formWebsiteUrl");
+    if (hpField && hpField.value.trim() !== "") {
+      console.warn("Spam submission blocked by honeypot.");
+      return false;
+    }
+
     let isValid = true;
     let firstErrorEl = null;
 
@@ -300,6 +305,14 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- 4. 送信処理（Googleフォーム POST or モック送信） ---
   btnFinalSubmit.addEventListener("click", () => {
     if (isSubmitting) return;
+
+    // スパムボット対策
+    const hpField = document.getElementById("formWebsiteUrl");
+    if (hpField && hpField.value.trim() !== "") {
+      console.warn("Spam submission blocked by honeypot.");
+      return;
+    }
+
     isSubmitting = true;
 
     // ボタンのローディング状態化
