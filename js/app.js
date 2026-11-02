@@ -88,18 +88,33 @@ document.addEventListener("DOMContentLoaded", () => {
       inputPerformer.value = currentPerformer;
     }
 
-    // 公演日程プルダウンの構築
+    // 公演日程プルダウンの構築（前日23:59を過ぎた公演は除外）
     if (selectSchedule) {
       selectSchedule.innerHTML = '<option value="">-- ご希望の日時を選択してください --</option>';
+      const now = new Date();
+      let availableCount = 0;
       info.schedules.forEach((item) => {
-        const option = document.createElement("option");
-        option.value = item.label;
-        option.textContent = item.label + (item.available === false ? " (満席)" : "");
-        if (item.available === false) {
-          option.disabled = true;
+        const isExpired = item.deadline ? new Date(item.deadline) < now : false;
+        if (!isExpired) {
+          const option = document.createElement("option");
+          option.value = item.label;
+          option.textContent = item.label + (item.available === false ? " (満席)" : "");
+          if (item.available === false) {
+            option.disabled = true;
+          }
+          selectSchedule.appendChild(option);
+          availableCount++;
         }
-        selectSchedule.appendChild(option);
       });
+
+      if (availableCount === 0) {
+        selectSchedule.innerHTML = '<option value="">-- 全公演の予約受付を終了いたしました --</option>';
+        selectSchedule.disabled = true;
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = "全公演の予約受付は終了いたしました";
+        }
+      }
     }
 
     // 券種プルダウンの構築
@@ -241,7 +256,14 @@ document.addEventListener("DOMContentLoaded", () => {
       isValid = false;
       if (!firstErrorEl) firstErrorEl = selectSchedule;
     } else {
-      clearError(selectSchedule, "scheduleError");
+      const selectedItem = info.schedules.find((s) => s.label === selectSchedule.value);
+      if (selectedItem && selectedItem.deadline && new Date(selectedItem.deadline) < new Date()) {
+        setError(selectSchedule, "scheduleError", "選択された公演日時は、前日23:59を過ぎたため予約受付を終了いたしました。");
+        isValid = false;
+        if (!firstErrorEl) firstErrorEl = selectSchedule;
+      } else {
+        clearError(selectSchedule, "scheduleError");
+      }
     }
 
     // 券種
@@ -310,6 +332,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const hpField = document.getElementById("formWebsiteUrl");
     if (hpField && hpField.value.trim() !== "") {
       console.warn("Spam submission blocked by honeypot.");
+      return;
+    }
+
+    // 送信直前の締切再検証
+    const selectedItem = config.eventInfo.schedules.find((s) => s.label === selectSchedule.value);
+    if (selectedItem && selectedItem.deadline && new Date(selectedItem.deadline) < new Date()) {
+      alert("申し訳ございません。選択された公演日時は、前日23:59を過ぎたため予約受付を終了いたしました。");
+      btnFinalSubmit.disabled = false;
+      btnCancelConfirm.disabled = false;
+      btnFinalSubmit.classList.remove("loading");
+      btnFinalSubmit.querySelector(".btn-text").textContent = "この内容で予約を送信する";
+      confirmModal.classList.remove("active");
+      confirmModal.setAttribute("aria-hidden", "true");
+      setError(selectSchedule, "scheduleError", "選択された公演日時は、前日23:59を過ぎたため予約受付を終了いたしました。");
       return;
     }
 

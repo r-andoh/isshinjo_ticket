@@ -61,21 +61,22 @@ const FORM_CONFIG = {
     maxTickets: 4,
 
     // 公演日程一覧 (2026年11月25日(水)〜11月29日(日) 全9ステージ)
+    // 各公演前日の23:59:59まで予約可能
     schedules: [
-      { id: "s1", label: "2026年11月25日(水) 19:00開演", available: true },
-      { id: "s2", label: "2026年11月26日(木) 14:00開演", available: true },
-      { id: "s3", label: "2026年11月26日(木) 19:00開演", available: true },
-      { id: "s4", label: "2026年11月27日(金) 14:00開演", available: true },
-      { id: "s5", label: "2026年11月27日(金) 19:00開演", available: true },
-      { id: "s6", label: "2026年11月28日(土) 13:00開演", available: true },
-      { id: "s7", label: "2026年11月28日(土) 17:00開演", available: true },
-      { id: "s8", label: "2026年11月29日(日) 13:00開演", available: true },
-      { id: "s9", label: "2026年11月29日(日) 17:00開演", available: true }
+      { id: "s1", label: "2026年11月25日(水) 19:00開演", deadline: "2026-11-24T23:59:59+09:00", available: true },
+      { id: "s2", label: "2026年11月26日(木) 14:00開演", deadline: "2026-11-25T23:59:59+09:00", available: true },
+      { id: "s3", label: "2026年11月26日(木) 19:00開演", deadline: "2026-11-25T23:59:59+09:00", available: true },
+      { id: "s4", label: "2026年11月27日(金) 14:00開演", deadline: "2026-11-26T23:59:59+09:00", available: true },
+      { id: "s5", label: "2026年11月27日(金) 19:00開演", deadline: "2026-11-26T23:59:59+09:00", available: true },
+      { id: "s6", label: "2026年11月28日(土) 13:00開演", deadline: "2026-11-27T23:59:59+09:00", available: true },
+      { id: "s7", label: "2026年11月28日(土) 17:00開演", deadline: "2026-11-27T23:59:59+09:00", available: true },
+      { id: "s8", label: "2026年11月29日(日) 13:00開演", deadline: "2026-11-28T23:59:59+09:00", available: true },
+      { id: "s9", label: "2026年11月29日(日) 17:00開演", deadline: "2026-11-28T23:59:59+09:00", available: true }
     ],
 
     // 受付・ご来場に関する注意事項
     notices: [
-      '本フォームは出演者（安藤理樹）が独自に作成・管理している予約受付窓口です。個人受付が気になる方は公式プレイガイド（<a href="https://www.confetti-web.com/events/17419" target="_blank" rel="noopener noreferrer">カンフェティ</a> ／ <a href="https://t.pia.jp/pia/event/event.do?eventCd=2632238" target="_blank" rel="noopener noreferrer">チケットぴあ</a>）よりお買い求めください。',
+      '本フォームは、安藤理樹が独自に作成管理している予約受付窓口です。個人受付が気になる方は公式プレイガイド（<a href="https://www.confetti-web.com/events/17419" target="_blank" rel="noopener noreferrer">カンフェティ</a> ／ <a href="https://t.pia.jp/pia/event/event.do?eventCd=2632238" target="_blank" rel="noopener noreferrer">チケットぴあ</a>）よりお買い求めください。',
       "本フォーム送信時点では予約は【仮予約】となります。残席状況を確認後、担当者より確定メールをお送りいたします。",
       "受付開始は開演の40分前、客席開場は開演の30分前です。",
       "開演時間を過ぎてのご来場は、指定のお席にご案内できない場合がございます。",
