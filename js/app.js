@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error("FORM_CONFIG が読み込まれていません。js/config.js を確認してください。");
     return;
   }
+  const info = config.eventInfo;
 
   // --- 状態管理 ---
   let isSubmitting = false;
@@ -54,7 +55,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // イベント基本情報の反映
-    const info = config.eventInfo;
     document.title = `${info.organizer} ${info.title} - ${info.subtitle}`;
     
     setText("organizerText", info.organizer);
