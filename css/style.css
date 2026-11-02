@@ -164,7 +164,7 @@ body {
 .flyer-showcase-img {
   width: 100%;
   height: auto;
-  aspect-ratio: 560 / 793;
+  aspect-ratio: 723 / 1024;
   object-fit: cover;
   display: block;
 }

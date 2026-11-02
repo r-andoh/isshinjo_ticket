@@ -53,8 +53,9 @@ ticket_form/
 ├── .gitignore        # Googleドライブ同期ファイル・OS一時ファイルの除外設定
 ├── index.html        # 予約フォーム画面（ヘッダーショーケース・星取表・フォーム・モーダル群）
 ├── assets/
-│   ├── flyer.webp    # チラシメインビジュアル（560×793px / Retina対応WebP / 67KB）
-│   └── favicon.webp  # ファビコン・アプリアイコン（128×128px / Retina対応WebP / 4.4KB）
+│   ├── flyer.webp    # チラシメインビジュアル（723×1024px / 高精細WebP）
+│   ├── ogp.jpg       # SNS（X/Twitter/LINE等）用サムネイル画像（1200×630px / 1.91:1）
+│   └── favicon.webp  # ファビコン・アプリアイコン（128×128px / 背景透過WebP）
 ├── css/
 │   └── style.css     # Apple調クリーンホワイトスタイル ＋ Lism CSS統合
 ├── js/
