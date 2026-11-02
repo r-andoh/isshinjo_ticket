@@ -308,6 +308,10 @@
             <td id="confirmTicketCount">-</td>
           </tr>
           <tr>
+            <th>合計金額</th>
+            <td id="confirmTotalPrice" style="font-weight: 700; color: var(--color-text-primary);">-</td>
+          </tr>
+          <tr>
             <th>備考</th>
             <td id="confirmMessage">-</td>
           </tr>
@@ -328,14 +332,13 @@
   <div id="successModal" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="successModalTitle">
     <div class="modal-content" style="text-align: center;">
       <div class="success-icon" aria-hidden="true">✓</div>
-      <div class="status-badge-provisional">仮予約 受付完了</div>
-      <h3 id="successModalTitle" style="font-family: var(--font-display); font-size: 1.35rem; margin-bottom: 10px;">ご予約申込を承りました</h3>
+      <div class="status-badge-provisional">フォームの送信が正常に完了いたしました</div>
+      <h3 id="successModalTitle" style="font-family: var(--font-display); font-size: 1.35rem; line-height: 1.35; margin-bottom: 12px;">仮予約の申し込みを承りました！<br>ありがとうございます！</h3>
       
       <div class="success-message-box">
-        <p style="margin-bottom: 8px;">フォームの送信が正常に完了いたしました。</p>
         <p style="margin-bottom: 8px; color: #b33a00; font-weight: 600;">※ご入力いただいたメールアドレス宛に、仮予約完了メールが届いていることをご確認ください。</p>
         <p style="margin-bottom: 8px;">30分経ってもメールが届かない場合は、大変お手数ですが安藤のX（<a href="https://x.com/r_andoh" target="_blank" rel="noopener noreferrer" style="color: var(--color-accent); text-decoration: underline; font-weight: 600;">@r_andoh</a>）までDMにてご連絡ください。</p>
-        <p style="font-size: 0.88rem; color: var(--color-text-secondary); margin-top: 12px; border-top: 1px dashed var(--color-border); padding-top: 10px;">劇場・稽古場での残席確認を行い、担当者より折り返し<strong>【ご予約確定メール】</strong>をお送りいたします。</p>
+        <p style="font-size: 0.88rem; color: var(--color-text-secondary); margin-top: 12px; border-top: 1px dashed var(--color-border); padding-top: 10px;">残席確認を行い、改めて折り返し<strong>【ご予約確定メール】</strong>をお送りいたします。</p>
       </div>
 
       <button type="button" id="btnCloseSuccess" class="submit-btn" style="width: auto; min-width: 180px; margin: 0 auto; min-height: 48px;">

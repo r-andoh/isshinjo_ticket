@@ -310,6 +310,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const selectedTypeOption = selectTicketType.options[selectTicketType.selectedIndex];
     setText("confirmTicketType", selectedTypeOption ? selectedTypeOption.textContent : selectTicketType.value);
     setText("confirmTicketCount", selectTicketCount.value);
+
+    // 合計金額の計算
+    const selectedType = info.ticketTypes.find((t) => t.label === selectTicketType.value);
+    const unitPrice = selectedType ? (selectedType.priceNum || parseInt(selectedType.price.replace(/[^\d]/g, ""), 10)) : 0;
+    const countNum = parseInt(selectTicketCount.value.replace(/[^\d]/g, ""), 10) || 0;
+    const totalPrice = unitPrice * countNum;
+    setText("confirmTotalPrice", totalPrice > 0 ? `${totalPrice.toLocaleString()}円 (税込)` : "-");
+
     setText("confirmMessage", inputMessage.value.trim() || "（なし）");
 
     // 確認モーダルを開く

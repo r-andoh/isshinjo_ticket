@@ -52,8 +52,8 @@ const FORM_CONFIG = {
 
     // 券種・料金情報
     ticketTypes: [
-      { id: "general", label: "一般指定席", price: "7,500円 (税込)" },
-      { id: "premium", label: "プレミアム席（最前2列確約・サイン入りポートレート付）", price: "9,500円 (税込)" }
+      { id: "general", label: "一般指定席", price: "7,500円 (税込)", priceNum: 7500 },
+      { id: "premium", label: "プレミアム席（最前2列確約・サイン入りポートレート付）", price: "9,500円 (税込)", priceNum: 9500 }
     ],
     ticketPriceSummary: "一般 7,500円 ／ プレミアム 9,500円（全席指定・税込）",
 
