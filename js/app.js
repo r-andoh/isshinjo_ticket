@@ -83,7 +83,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const currentPerformer = info.defaultPerformer || "安藤理樹";
 
     setText("eventSubtitleText", `${currentPerformer}扱い専用 チケット予約フォーム`);
-    setText("confirmPerformer", currentPerformer);
     if (inputPerformer) {
       inputPerformer.value = currentPerformer;
     }

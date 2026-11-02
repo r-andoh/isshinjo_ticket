@@ -118,7 +118,7 @@ python3 -m http.server 8000
 
 ---
 
-### ステップ2: Google フォームのエンドポイントと entry ID を抽出
+### ステップ2: Google フォームのエンドポイントと entry ID の取得
 
 1. 作成したGoogleフォームの右上にある **「目のアイコン（プレビュー）」** をクリックしてプレビュー画面を開きます。
 2. プレビュー画面のURLは以下のようになっています：
@@ -131,37 +131,30 @@ python3 -m http.server 8000
    ```
 3. プレビュー画面でブラウザの開発者ツール（F12 または 右クリック ➔「検証」）を開きます。
 4. 各入力欄（input / select / textarea要素）を検証ツールで確認し、`name="entry.XXXXXXXXX"` となっている属性値をメモします。
-   - お名前 ➔ `entry.2100160247`
-   - フリガナ ➔ `entry.1689145255`
-   - メールアドレス ➔ `entry.1389300706`
-   - ご観劇日時 ➔ `entry.727708549`
-   - 券種 ➔ `entry.1948786286`
-   - チケット枚数 ➔ `entry.1258909965`
-   - 備考 ➔ `entry.438285804`
 
 ---
 
-### ステップ3: `js/config.js` の設定（※本番設定反映済み）
+### ステップ3: `js/config.js` の設定
 
-本リポジトリの `ticket_form/js/config.js` は、作成いただいたGoogleフォームに合わせて既に設定済みです。
+取得した Google フォームのエンドポイントと entry ID を `js/config.js` に設定します：
 
 ```javascript
 const FORM_CONFIG = {
   // 1. Google フォームの送信先URL
-  formActionUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdw0_UtzOf3LKsyLGOaHzEbP8a4TEv7OCbClZ0QVamz_tzG9A/formResponse",
+  formActionUrl: "https://docs.google.com/forms/d/e/{YOUR_FORM_ID}/formResponse",
 
-  // 2. 本番稼働モード
+  // 2. 稼働モード（ローカルテスト時は true、本番時は false）
   isMockMode: false,
 
   // 3. 各項目の entry ID（全7項目）
   fields: {
-    name: "entry.2100160247",         // お名前
-    furigana: "entry.1689145255",     // フリガナ
-    email: "entry.1389300706",        // メールアドレス
-    schedule: "entry.727708549",       // 観劇日時
-    ticketType: "entry.1948786286",   // 券種（一般 / プレミアム）
-    ticketCount: "entry.1258909965",  // チケット枚数
-    message: "entry.438285804"        // 備考
+    name: "entry.XXXXXXXXX",         // お名前
+    furigana: "entry.XXXXXXXXX",     // フリガナ
+    email: "entry.XXXXXXXXX",        // メールアドレス
+    schedule: "entry.XXXXXXXXX",       // 観劇日時
+    ticketType: "entry.XXXXXXXXX",   // 券種（一般 / プレミアム）
+    ticketCount: "entry.XXXXXXXXX",  // チケット枚数
+    message: "entry.XXXXXXXXX"        // 備考
   },
 
   // 4. 公演・イベント基本情報 (ジェットラグ)
@@ -179,29 +172,14 @@ const FORM_CONFIG = {
 };
 ```
 
----
-
-### ステップ4: スプレッドシート（予約台帳）と稽古場運用の連携
-
-1. Googleフォームの「回答」タブから **「スプレッドシートにリンク」** を選択し、回答受信用スプレッドシートを作成します。
-2. 作成されたスプレッドシートを開き、Googleフォーム自動入力列（A〜H列）の右側に、以下の運用管理カラムを追加します：
-
-| A〜H列（自動入力） | I列（手動追加） | J列（手動追加） | K列（手動追加） |
-| :--- | :--- | :--- | :--- |
-| タイムスタンプ / お名前 / フリガナ / メール / 日時 / 券種 / 枚数 / 備考 | **ノート転記ステータス** | **確定メール送信日** | **座席・配席メモ** |
-| 自動入力 | `未転記` / `転記済` | `2026/11/10` | 領収書宛名、通路側希望 など |
-
-3. **日々の運用フロー**:
-   1. 予約が入るとスプレッドシートにリアルタイムで1行追加されます。
-   2. 稽古場にてスプレッドシートの「未転記」行を確認し、現地の紙ノート（座席配席表）へ記入。
-   3. ノート記入後、スプレッドシートのステータスを `転記済` に更新。
-   4. 残席確保の確認後、予約者宛てに確定メールを送信し、確定送信日を記録。
+> [!NOTE]
+> 実運用の接続先情報やGoogle Apps Script（自動返信・カレンダー連携）、スプレッドシートの運用手順については、非公開の運用マニュアル（`MANUAL_INTERNAL.md`）を参照してください。
 
 ---
 
-### ステップ5: GitHub Pages へのデプロイ
+### ステップ4: GitHub Pages へのデプロイ
 
-1. 本 `ticket_form` ディレクトリの内容を、GitHubリポジトリ（例: `ticket-reservation`）の `main` ブランチにプッシュします。
+1. 本 `ticket_form` ディレクトリの内容を、GitHubリポジトリ（例: `isshinjo_ticket`）の `main` ブランチにプッシュします。
 2. GitHubのリポジトリページから **Settings > Pages** を開きます。
 3. **Build and deployment** の Source で **Deploy from a branch** を選択し、Branch を `main` / `/(root)` に設定して「Save」をクリックします。
 4. 数分後、`https://<ユーザー名>.github.io/<リポジトリ名>/` に公開URLが生成されます。

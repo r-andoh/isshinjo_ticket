@@ -6,3 +6,8 @@
 # macOS & OS generated files
 .DS_Store
 Thumbs.db
+
+# Internal private manual / operation documents (do NOT push to GitHub)
+MANUAL_INTERNAL.md
+*INTERNAL*.md
+*PRIVATE*.md
