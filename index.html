@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="description" content="ジェットラグプロデュース『一身上の都合により』チケット予約フォームです。公演日程・券種・枚数をお選びいただき、お申し込みください。">
+  <meta name="theme-color" content="#fbfbfd">
+  <title>チケット予約フォーム | ジェットラグプロデュース 一身上の都合により</title>
+
+  <!-- ファビコン・アプリアイコン -->
+  <link rel="icon" type="image/webp" href="assets/favicon.webp">
+  <link rel="apple-touch-icon" href="assets/favicon.webp">
+
+  <!-- Gen Interface JP Webフォント (https://gen.typesetting.jp/) -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gen-interface-jp@0.8.1/cdn/all.css">
+
+  <!-- Lism CSS Framework (https://lism-css.com/) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lism-css@1.0.1/dist/css/main.css">
+
+  <!-- プロジェクト独自スタイルシート (Apple-like Clean White) -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- 非表示iframe (GoogleフォームCORS制約回避用) -->
+  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" title="送信処理用フレーム"></iframe>
+
+  <!-- モックモード表示バナー -->
+  <aside id="mockBanner" class="mock-banner" style="display:none;" role="status">
+    <span>⚠️ <strong>テスト（モック）モード中:</strong> Googleフォームへは送信されずUI動作を確認できます。本番送信時は <code>js/config.js</code> の <code>isMockMode: false</code> に変更してください。</span>
+  </aside>
+
+  <main class="container l--stack -g:24">
+    <!-- 統合ヘッダー＆公演概要ショーケース -->
+    <header class="apple-card header-showcase">
+      <div class="header-main-grid">
+        <!-- 左側: チラシ画像（横幅半分）+ Lightboxトリガー -->
+        <div class="header-flyer-col">
+          <button type="button" class="flyer-zoom-trigger" id="btnOpenLightbox" aria-label="チラシを拡大表示する">
+            <img src="assets/flyer.webp" alt="一身上の都合により チラシビジュアル" class="flyer-showcase-img" width="560" height="793">
+          </button>
+        </div>
+
+        <!-- 右側: 作品情報 + 公演概要 -->
+        <div class="header-info-col l--stack -g:14">
+          <div class="title-block">
+            <p class="organizer-plain-text" id="organizerText">ジェットラグプロデュース</p>
+            <h1 class="header-title" id="eventTitleText">一身上の都合により</h1>
+            <p class="header-credits" id="creditsText">作・演出：山崎洋平</p>
+            <div>
+              <span class="header-performer-pill" id="eventSubtitleText">安藤理樹扱い専用 チケット予約フォーム</span>
+            </div>
+          </div>
+
+          <!-- 公演詳細情報 -->
+          <div class="overview-block l--stack -g:10">
+            <div class="info-grid">
+              <div class="info-label">日程</div>
+              <div class="info-value">
+                <strong id="eventDatesText">2026年11月25日(水)〜29日(日)</strong>
+              </div>
+
+              <div class="info-label">会場</div>
+              <div class="info-value">
+                <strong><a id="venueMapLink" href="https://maps.google.com/?q=新宿シアタートップス" target="_blank" rel="noopener noreferrer" class="venue-link"><span id="venueText">新宿シアタートップス</span></a></strong><br>
+                <span id="venueAddressText">東京都新宿区新宿3丁目20-8 WaMall TOPS HOUSE ビル4階</span>
+              </div>
+
+              <div class="info-label">
+                料金
+                <span class="price-note-under-label">※全席指定・税込</span>
+              </div>
+              <div class="info-value">
+                <div class="price-table">
+                  <div class="price-row">
+                    <span class="price-type">一般</span>
+                    <span class="price-amount">7,500円</span>
+                  </div>
+                  <div class="price-row">
+                    <span class="price-type price-type-interactive" tabindex="0" role="button" aria-describedby="premiumTooltip">
+                      プレミアム
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="info-icon" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                      <span class="tooltip-bubble" id="premiumTooltip" role="tooltip">
+                        最前2列確約 ＋ サイン入りご希望キャストのポートレート付き
+                      </span>
+                    </span>
+                    <span class="price-amount">9,500円</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="info-label">公式サイト</div>
+              <div class="info-value">
+                <a id="officialSiteLink" href="http://www.jetlag.jp/" target="_blank" rel="noopener noreferrer" class="official-site-link">ジェットラグ</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- タイムテーブル（星取表） -->
+      <div class="timetable-section">
+        <div class="timetable-header-inline">
+          <h3 class="timetable-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            タイムテーブル
+          </h3>
+          <span class="timetable-note">※受付開始は開演40分前、客席開場は開演30分前です。</span>
+        </div>
+        <div class="timetable-wrapper">
+          <table class="timetable-matrix">
+            <thead>
+              <tr>
+                <th>開演時間</th>
+                <th>11/25<br>(水)</th>
+                <th>11/26<br>(木)</th>
+                <th>11/27<br>(金)</th>
+                <th>11/28<br>(土)</th>
+                <th>11/29<br>(日)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>13:00</th>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td><span class="stage-dot">●</span></td>
+                <td><span class="stage-dot">●</span></td>
+              </tr>
+              <tr>
+                <th>14:00</th>
+                <td>-</td>
+                <td><span class="stage-dot">●</span></td>
+                <td><span class="stage-dot">●</span></td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <th>17:00</th>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td><span class="stage-dot">●</span></td>
+                <td><span class="stage-dot">●</span></td>
+              </tr>
+              <tr>
+                <th>19:00</th>
+                <td><span class="stage-dot">●</span></td>
+                <td><span class="stage-dot">●</span></td>
+                <td><span class="stage-dot">●</span></td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </header>
+
+    <!-- 予約フォーム本体 -->
+    <section class="apple-card form-card">
+      <form id="bookingForm" method="POST" target="hidden_iframe" novalidate>
+        <!-- 扱いキャスト（非表示入力） -->
+        <input type="hidden" id="inputPerformer" value="安藤理樹">
+
+        <!-- お名前 -->
+        <div class="form-group">
+          <div class="label-container">
+            <label for="inputName">お名前</label>
+            <span class="badge-required">必須</span>
+          </div>
+          <input type="text" id="inputName" name="entry.2100160247" placeholder="例: 山田 太郎" autocomplete="name" required aria-describedby="nameError">
+          <p class="error-message" id="nameError" role="alert"></p>
+        </div>
+
+        <!-- フリガナ -->
+        <div class="form-group">
+          <div class="label-container">
+            <label for="inputFurigana">フリガナ</label>
+            <span class="badge-required">必須</span>
+          </div>
+          <input type="text" id="inputFurigana" name="entry.1689145255" placeholder="例: ヤマダ タロウ" required aria-describedby="furiganaError">
+          <p class="error-message" id="furiganaError" role="alert"></p>
+        </div>
+
+        <!-- メールアドレス -->
+        <div class="form-group">
+          <div class="label-container">
+            <div class="label-left">
+              <label for="inputEmail">メールアドレス</label>
+              <span class="label-hint-inline">※ご予約の控えおよび確定メールをお送りします。</span>
+            </div>
+            <span class="badge-required">必須</span>
+          </div>
+          <input type="email" id="inputEmail" name="entry.1389300706" placeholder="example@domain.com" autocomplete="email" required aria-describedby="emailError">
+          <p class="error-message" id="emailError" role="alert"></p>
+        </div>
+
+        <!-- 観劇日時 -->
+        <div class="form-group">
+          <div class="label-container">
+            <label for="selectSchedule">ご観劇日時</label>
+            <span class="badge-required">必須</span>
+          </div>
+          <select id="selectSchedule" name="entry.727708549" required aria-describedby="scheduleError">
+            <option value="">-- ご希望の日時を選択してください --</option>
+          </select>
+          <p class="error-message" id="scheduleError" role="alert"></p>
+        </div>
+
+        <!-- 券種選択 -->
+        <div class="form-group">
+          <div class="label-container">
+            <label for="selectTicketType">券種</label>
+            <span class="badge-required">必須</span>
+          </div>
+          <select id="selectTicketType" name="entry.1948786286" required aria-describedby="ticketTypeError">
+            <option value="">-- 券種を選択してください --</option>
+          </select>
+          <p class="error-message" id="ticketTypeError" role="alert"></p>
+        </div>
+
+        <!-- チケット枚数 -->
+        <div class="form-group">
+          <div class="label-container">
+            <label for="selectTicketCount">チケット枚数</label>
+            <span class="badge-required">必須</span>
+          </div>
+          <select id="selectTicketCount" name="entry.1258909965" required aria-describedby="ticketCountError">
+            <option value="">-- 枚数を選択してください --</option>
+          </select>
+          <p class="error-message" id="ticketCountError" role="alert"></p>
+        </div>
+
+        <!-- 備考 -->
+        <div class="form-group">
+          <div class="label-container">
+            <label for="inputMessage">備考</label>
+            <span class="badge-optional">任意</span>
+          </div>
+          <textarea id="inputMessage" name="entry.438285804" rows="3" placeholder="お席のご要望や領収書の有無、連絡事項などがございましたらご記入ください。"></textarea>
+        </div>
+
+        <!-- 注意事項・仮予約案内ボックス -->
+        <aside class="notice-box" aria-labelledby="noticeBoxHeading">
+          <h3 id="noticeBoxHeading">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+            ご予約に関する重要なお知らせ
+          </h3>
+          <ul class="notice-list" id="noticeList">
+            <!-- config.js から自動挿入されます -->
+          </ul>
+        </aside>
+
+        <!-- 同意チェックボックス -->
+        <label class="checkbox-container">
+          <input type="checkbox" id="agreeTerms" required>
+          <span class="checkbox-text">上記注意事項を確認しました</span>
+        </label>
+
+        <!-- 送信ボタン（入力確認へ） -->
+        <button type="submit" id="submitBtn" class="submit-btn">
+          <span class="btn-text">入力内容を確認する</span>
+          <span class="spinner" aria-hidden="true"></span>
+        </button>
+      </form>
+    </section>
+
+    <!-- フッター -->
+    <footer class="footer"></footer>
+  </main>
+
+  <!-- 1. 入力内容確認モーダル -->
+  <div id="confirmModal" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="confirmModalTitle">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="confirmModalTitle">ご予約内容の確認</h3>
+        <p>以下の内容でお間違いがないかご確認ください。</p>
+      </div>
+
+      <table class="confirm-table">
+        <tbody>
+          <tr>
+            <th>扱い窓口</th>
+            <td id="confirmPerformer">-</td>
+          </tr>
+          <tr>
+            <th>お名前</th>
+            <td id="confirmName">-</td>
+          </tr>
+          <tr>
+            <th>フリガナ</th>
+            <td id="confirmFurigana">-</td>
+          </tr>
+          <tr>
+            <th>メールアドレス</th>
+            <td id="confirmEmail">-</td>
+          </tr>
+          <tr>
+            <th>観劇日時</th>
+            <td id="confirmSchedule">-</td>
+          </tr>
+          <tr>
+            <th>券種</th>
+            <td id="confirmTicketType">-</td>
+          </tr>
+          <tr>
+            <th>予約枚数</th>
+            <td id="confirmTicketCount">-</td>
+          </tr>
+          <tr>
+            <th>備考</th>
+            <td id="confirmMessage">-</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="modal-actions">
+        <button type="button" id="btnCancelConfirm" class="modal-btn-cancel">修正する</button>
+        <button type="button" id="btnFinalSubmit" class="modal-btn-confirm">
+          <span class="btn-text">この内容で予約を送信する</span>
+          <span class="spinner" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. 予約完了（サンクス）モーダル -->
+  <div id="successModal" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="successModalTitle">
+    <div class="modal-content" style="text-align: center;">
+      <div class="success-icon" aria-hidden="true">✓</div>
+      <div class="status-badge-provisional">仮予約 受付完了</div>
+      <h3 id="successModalTitle" style="font-family: var(--font-display); font-size: 1.35rem; margin-bottom: 10px;">ご予約申込を承りました</h3>
+      
+      <div class="success-message-box">
+        <p style="margin-bottom: 8px;">フォームの送信が正常に完了いたしました。</p>
+        <p style="margin-bottom: 8px;"><strong>※本時点では予約はまだ確定しておりません。</strong></p>
+        <p>劇場・稽古場での残席確認を行い、担当者より折り返し<strong>【ご予約確定メール】</strong>をお送りいたします。確定メールの到着まで今しばらくお待ちください。</p>
+      </div>
+
+      <button type="button" id="btnCloseSuccess" class="submit-btn" style="width: auto; min-width: 180px; margin: 0 auto; min-height: 48px;">
+        画面を閉じる
+      </button>
+    </div>
+  </div>
+
+  <!-- 3. チラシ拡大表示 Lightbox モーダル -->
+  <div id="lightboxModal" class="lightbox-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="チラシ拡大表示">
+    <div class="lightbox-wrapper">
+      <button type="button" id="btnCloseLightbox" class="lightbox-close-btn" aria-label="閉じる">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <img src="assets/flyer.webp" alt="『一身上の都合により』チラシ拡大表示" class="lightbox-img">
+    </div>
+  </div>
+
+  <!-- スクリーンリーダー用完了アナウンス領域 -->
+  <div id="srAnnounce" class="sr-only" aria-live="polite" style="position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0;"></div>
+
+  <!-- スクリプト -->
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
