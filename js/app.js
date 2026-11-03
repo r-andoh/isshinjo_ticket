@@ -118,11 +118,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 券種プルダウンの構築
     if (selectTicketType && info.ticketTypes) {
-      selectTicketType.innerHTML = '<option value="">-- 券種を選択してください --</option>';
-      info.ticketTypes.forEach((type) => {
+      selectTicketType.innerHTML = "";
+      if (info.ticketTypes.length > 1) {
+        selectTicketType.innerHTML = '<option value="">-- 券種を選択してください --</option>';
+      }
+      info.ticketTypes.forEach((type, idx) => {
         const option = document.createElement("option");
         option.value = type.label;
         option.textContent = `${type.label} - ${type.price}`;
+        if (info.ticketTypes.length === 1 || idx === 0) {
+          option.selected = true;
+        }
         selectTicketType.appendChild(option);
       });
     }
