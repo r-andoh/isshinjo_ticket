@@ -54,7 +54,7 @@ const FORM_CONFIG = {
     ticketTypes: [
       { id: "general", label: "一般指定席", price: "7,500円 (税込)", priceNum: 7500 }
     ],
-    ticketPriceSummary: "一般 7,500円 ／ プレミアム 9,500円（※プレミアム席はカンフェティ扱いのみ）",
+    ticketPriceSummary: "一般 7,500円 ／ プレミアム 9,500円（全席指定・税込）",
 
     // 1回の申込における最大予約枚数
     maxTickets: 4,
