@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const option = document.createElement("option");
         option.value = type.label;
         option.textContent = `${type.label} - ${type.price}`;
-        if (info.ticketTypes.length === 1 || idx === 0) {
+        if (info.ticketTypes.length === 1) {
           option.selected = true;
         }
         selectTicketType.appendChild(option);

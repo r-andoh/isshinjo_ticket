@@ -7,7 +7,7 @@
 
 const FORM_CONFIG = {
   // バージョン情報 (v[メジャー].[プッシュ回数].[Antigravity修正回数])
-  version: "v1.22.0",
+  version: "v1.23.0",
 
   // ==========================================
   // 1. Google フォーム連携設定
@@ -53,9 +53,10 @@ const FORM_CONFIG = {
     venueAccess: "JR・小田急線・京王線「新宿駅」東口 徒歩5分 ／ 東京メトロ「新宿三丁目駅」B9出口 徒歩1分",
     venueMapUrl: "https://maps.google.com/?q=新宿シアタートップス",
 
-    // 券種・料金情報（当窓口は一般指定席のみ）
+    // 券種・料金情報（一般 ＋ プレミアム）
     ticketTypes: [
-      { id: "general", label: "一般指定席", price: "7,500円 (税込)", priceNum: 7500 }
+      { id: "general", label: "一般指定席", price: "7,500円 (税込)", priceNum: 7500 },
+      { id: "premium", label: "プレミアム席（最前2列確約・サイン入りポートレート付）", price: "9,500円 (税込)", priceNum: 9500 }
     ],
     ticketPriceSummary: "一般 7,500円 ／ プレミアム 9,500円（全席指定・税込）",
 
