@@ -500,11 +500,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnBottomCloseChangelog = document.getElementById("btnBottomCloseChangelog");
 
   function initChangelog() {
-    if (!window.APP_CHANGELOG || !Array.isArray(window.APP_CHANGELOG) || window.APP_CHANGELOG.length === 0) {
+    const list = (typeof window !== "undefined" && Array.isArray(window.APP_CHANGELOG))
+      ? window.APP_CHANGELOG
+      : (typeof APP_CHANGELOG !== "undefined" && Array.isArray(APP_CHANGELOG) ? APP_CHANGELOG : []);
+
+    if (list.length === 0) {
       return;
     }
 
-    const latest = window.APP_CHANGELOG[0];
+    const latest = list[0];
     if (versionTooltipText && latest) {
       versionTooltipText.textContent = `${latest.version}: ${latest.summary}`;
     }
@@ -516,7 +520,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const ul = document.createElement("ul");
       ul.className = "changelog-timeline";
 
-      window.APP_CHANGELOG.forEach((item, index) => {
+      list.forEach((item, index) => {
         const li = document.createElement("li");
         li.className = "changelog-item" + (index === 0 ? " is-latest" : "");
 

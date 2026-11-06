@@ -47,7 +47,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lism-css@1.0.1/dist/css/main.css">
 
   <!-- プロジェクト独自スタイルシート (Apple-like Clean White) -->
-  <link rel="stylesheet" href="css/style.css?v=1.27.0">
+  <link rel="stylesheet" href="css/style.css?v=1.28.0">
 </head>
 <body>
 
@@ -299,7 +299,7 @@
 
     <!-- フッター -->
     <footer class="footer">
-      <p id="versionBtn" class="footer-version" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false" aria-controls="changelogModal" title="最新 (v1.27.0): フッターのミニマルデザイン維持＆更新履歴ホバー・ポップアップ表示へ刷新&#10;（クリックで全履歴を表示）">v1.27.0</p>
+      <p id="versionBtn" class="footer-version" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false" aria-controls="changelogModal" title="最新 (v1.28.0): アップデート履歴モーダルの静的プリレンダリング対応＆表示安定化&#10;（クリックで全履歴を表示）">v1.28.0</p>
     </footer>
   </main>
 
@@ -401,7 +401,205 @@
       </div>
 
       <div class="changelog-body" id="changelogList">
-        <!-- JSで動的レンダリング -->
+        <ul class="changelog-timeline">
+          <li class="changelog-item is-latest">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.28.0</span>
+            <span class="changelog-badge-latest">最新</span>
+              <span class="changelog-date">2026.11.07</span>
+            </div>
+            <p class="changelog-summary">アップデート履歴モーダルの静的プリレンダリング対応＆表示安定化</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.27.0</span>
+              <span class="changelog-date">2026.11.06</span>
+            </div>
+            <p class="changelog-summary">フッターのミニマルデザイン維持＆更新履歴ホバー・ポップアップ表示へ刷新</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.26.0</span>
+              <span class="changelog-date">2026.11.06</span>
+            </div>
+            <p class="changelog-summary">フッターに更新履歴モーダル＆最新ホバー表示を追加</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.25.0</span>
+              <span class="changelog-date">2026.11.05</span>
+            </div>
+            <p class="changelog-summary">タイトル・OGPを『ジェットラグ『一身上の都合により』｜チケット予約』に統一</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.24.0</span>
+              <span class="changelog-date">2026.11.05</span>
+            </div>
+            <p class="changelog-summary">OGP・Twitterカードタグの強化（secure_url対応・画像キャッシュ更新）</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.23.0</span>
+              <span class="changelog-date">2026.11.05</span>
+            </div>
+            <p class="changelog-summary">プレミアム席の選択解禁、カンフェティ限定注記の削除</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.22.0</span>
+              <span class="changelog-date">2026.11.04</span>
+            </div>
+            <p class="changelog-summary">キャンセル完了メール新設、キャンセルボタンデザインの調整</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.21.0</span>
+              <span class="changelog-date">2026.11.04</span>
+            </div>
+            <p class="changelog-summary">スプレッドシート突合による予約キャンセル自動判定を実装</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.20.0</span>
+              <span class="changelog-date">2026.11.04</span>
+            </div>
+            <p class="changelog-summary">送信制限のクールダウン間隔を30分から5分へ短縮</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.19.0</span>
+              <span class="changelog-date">2026.11.04</span>
+            </div>
+            <p class="changelog-summary">メール内キャンセルリンクをボタン風HTMLデザインに変更</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.18.0</span>
+              <span class="changelog-date">2026.11.04</span>
+            </div>
+            <p class="changelog-summary">キャンセル処理をGAS純粋トリガー方式へ刷新し安定化</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.17.0</span>
+              <span class="changelog-date">2026.11.04</span>
+            </div>
+            <p class="changelog-summary">チケットキャンセル申請ワークフローの初期導入</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.16.0</span>
+              <span class="changelog-date">2026.11.04</span>
+            </div>
+            <p class="changelog-summary">Cloudflare Web Analyticsアクセス解析を導入</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.15.0</span>
+              <span class="changelog-date">2026.11.03</span>
+            </div>
+            <p class="changelog-summary">注意事項欄の重複していたプレミアム席案内を削除</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.14.0</span>
+              <span class="changelog-date">2026.11.03</span>
+            </div>
+            <p class="changelog-summary">新バージョニング規約（v[major].[push].[agy]）を制定・適用</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.13.0</span>
+              <span class="changelog-date">2026.11.03</span>
+            </div>
+            <p class="changelog-summary">ヘッダー価格表記の調整、フッターへバージョン表記を追加</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.12.0</span>
+              <span class="changelog-date">2026.11.03</span>
+            </div>
+            <p class="changelog-summary">券種選択欄のプレミアム席注記を簡素化</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.11.0</span>
+              <span class="changelog-date">2026.11.03</span>
+            </div>
+            <p class="changelog-summary">一般指定席のみに固定しプレミアム席のカンフェティ案内を追加</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.10.0</span>
+              <span class="changelog-date">2026.11.03</span>
+            </div>
+            <p class="changelog-summary">キャスト集合写真を用いた公式OGPサムネイル画像を採用</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.9.0</span>
+              <span class="changelog-date">2026.11.03</span>
+            </div>
+            <p class="changelog-summary">OGP・Twitterカードの初期設定、チラシ画像の更新</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.8.0</span>
+              <span class="changelog-date">2026.11.02</span>
+            </div>
+            <p class="changelog-summary">確認モーダルへ合計金額を追加、自動返信メールの文面調整</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.7.0</span>
+              <span class="changelog-date">2026.11.02</span>
+            </div>
+            <p class="changelog-summary">個人情報の取り扱い・終演後破棄に関する注記を追加</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.6.0</span>
+              <span class="changelog-date">2026.11.02</span>
+            </div>
+            <p class="changelog-summary">確認モーダルから扱いキャスト欄を省略（安藤固定化）</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.5.0</span>
+              <span class="changelog-date">2026.11.02</span>
+            </div>
+            <p class="changelog-summary">確認モーダル表示時のスクリプト参照エラーを修正</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.4.0</span>
+              <span class="changelog-date">2026.11.02</span>
+            </div>
+            <p class="changelog-summary">モバイル表示順序の最適化、前日23:59締切バリデーション実装</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.3.0</span>
+              <span class="changelog-date">2026.11.02</span>
+            </div>
+            <p class="changelog-summary">ファビコン背景の透過処理（ダークモード対応）</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.2.0</span>
+              <span class="changelog-date">2026.11.02</span>
+            </div>
+            <p class="changelog-summary">扱いキャストを「安藤理樹」に固定、スパム対策ハニーポット導入</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.1.0</span>
+              <span class="changelog-date">2026.11.02</span>
+            </div>
+            <p class="changelog-summary">チケット予約フォームの初版リリース</p>
+          </li>
+        </ul>
       </div>
 
       <div class="modal-actions" style="margin-top: 14px;">
@@ -413,16 +611,16 @@
   <!-- バージョン ホバー ツールチップ (フローティング) -->
   <div id="versionTooltip" class="version-tooltip-floating" style="display: none;" role="tooltip" aria-hidden="true">
     <span class="tooltip-badge">最新</span>
-    <span class="tooltip-text" id="versionTooltipText">v1.27.0: フッターのミニマルデザイン維持＆更新履歴ホバー・ポップアップ表示へ刷新</span>
+    <span class="tooltip-text" id="versionTooltipText">v1.28.0: アップデート履歴モーダルの静的プリレンダリング対応＆表示安定化</span>
   </div>
 
   <!-- スクリーンリーダー用完了アナウンス領域 -->
   <div id="srAnnounce" class="sr-only" aria-live="polite" style="position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0;"></div>
 
   <!-- スクリプト -->
-  <script src="js/config.js?v=1.27.0"></script>
-  <script src="js/changelog.js?v=1.27.0"></script>
-  <script src="js/app.js?v=1.27.0"></script>
+  <script src="js/config.js?v=1.28.0"></script>
+  <script src="js/changelog.js?v=1.28.0"></script>
+  <script src="js/app.js?v=1.28.0"></script>
 
   <!-- Cloudflare Web Analytics -->
   <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7ff54a4a9a42474183c5d0f09f55cf06"}'></script>
