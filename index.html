@@ -299,7 +299,16 @@
 
     <!-- フッター -->
     <footer class="footer">
-      <p class="footer-version">v1.25.0</p>
+      <div class="footer-version-wrapper">
+        <button type="button" id="versionBtn" class="footer-version-btn" aria-haspopup="dialog" aria-expanded="false" aria-controls="changelogModal" title="クリックでアップデート履歴を表示">
+          <span class="version-label">v1.26.0</span>
+          <span class="version-icon" aria-hidden="true">ⓘ</span>
+        </button>
+        <div id="versionTooltip" class="version-tooltip" role="tooltip" aria-hidden="true">
+          <span class="tooltip-badge">最新</span>
+          <span class="tooltip-text" id="versionTooltipText">v1.26.0: フッターに更新履歴モーダル＆最新ホバー表示を追加</span>
+        </div>
+      </div>
     </footer>
   </main>
 
@@ -387,11 +396,35 @@
     </div>
   </div>
 
+  <!-- 4. アップデート履歴 モーダル -->
+  <div id="changelogModal" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="changelogModalTitle">
+    <div class="modal-content changelog-modal-content">
+      <div class="modal-header changelog-modal-header">
+        <div class="changelog-header-text">
+          <h3 id="changelogModalTitle">アップデート履歴</h3>
+          <p class="changelog-header-sub">これまでの更新・改善内容一覧</p>
+        </div>
+        <button type="button" id="btnCloseChangelog" class="modal-close-icon-btn" aria-label="閉じる">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <div class="changelog-body" id="changelogList">
+        <!-- JSで動的レンダリング -->
+      </div>
+
+      <div class="modal-actions" style="margin-top: 14px;">
+        <button type="button" id="btnBottomCloseChangelog" class="modal-btn-cancel" style="width: 100%;">閉じる</button>
+      </div>
+    </div>
+  </div>
+
   <!-- スクリーンリーダー用完了アナウンス領域 -->
   <div id="srAnnounce" class="sr-only" aria-live="polite" style="position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0;"></div>
 
   <!-- スクリプト -->
   <script src="js/config.js"></script>
+  <script src="js/changelog.js"></script>
   <script src="js/app.js"></script>
 
   <!-- Cloudflare Web Analytics -->

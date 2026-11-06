@@ -54,8 +54,14 @@ document.addEventListener("DOMContentLoaded", () => {
       mockBanner.style.display = "flex";
     }
 
+    // バージョン番号の反映
+    const versionLabel = document.querySelector(".version-label");
+    if (versionLabel && config.version) {
+      versionLabel.textContent = config.version;
+    }
+
     // イベント基本情報の反映
-    document.title = `${info.organizer} ${info.title} - ${info.subtitle}`;
+    document.title = "ジェットラグ『一身上の都合により』｜チケット予約";
     
     setText("organizerText", info.organizer);
     setText("eventTitleText", info.title);
@@ -484,11 +490,115 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // --- 7. アップデート履歴 モーダル & ツールチップ制御 ---
+  const versionBtn = document.getElementById("versionBtn");
+  const versionTooltipText = document.getElementById("versionTooltipText");
+  const changelogModal = document.getElementById("changelogModal");
+  const changelogList = document.getElementById("changelogList");
+  const btnCloseChangelog = document.getElementById("btnCloseChangelog");
+  const btnBottomCloseChangelog = document.getElementById("btnBottomCloseChangelog");
+
+  function initChangelog() {
+    if (!window.APP_CHANGELOG || !Array.isArray(window.APP_CHANGELOG) || window.APP_CHANGELOG.length === 0) {
+      return;
+    }
+
+    const latest = window.APP_CHANGELOG[0];
+    if (versionTooltipText && latest) {
+      versionTooltipText.textContent = `${latest.version}: ${latest.summary}`;
+    }
+
+    if (changelogList) {
+      const ul = document.createElement("ul");
+      ul.className = "changelog-timeline";
+
+      window.APP_CHANGELOG.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.className = "changelog-item" + (index === 0 ? " is-latest" : "");
+
+        const header = document.createElement("div");
+        header.className = "changelog-item-header";
+
+        const verSpan = document.createElement("span");
+        verSpan.className = "changelog-version";
+        verSpan.textContent = item.version;
+        header.appendChild(verSpan);
+
+        if (index === 0) {
+          const latestBadge = document.createElement("span");
+          latestBadge.className = "changelog-badge-latest";
+          latestBadge.textContent = "最新";
+          header.appendChild(latestBadge);
+        }
+
+        if (item.date) {
+          const dateSpan = document.createElement("span");
+          dateSpan.className = "changelog-date";
+          dateSpan.textContent = item.date;
+          header.appendChild(dateSpan);
+        }
+
+        const pSummary = document.createElement("p");
+        pSummary.className = "changelog-summary";
+        pSummary.textContent = item.summary;
+
+        li.appendChild(header);
+        li.appendChild(pSummary);
+        ul.appendChild(li);
+      });
+
+      changelogList.innerHTML = "";
+      changelogList.appendChild(ul);
+    }
+  }
+
+  function openChangelog() {
+    if (!changelogModal) return;
+    changelogModal.classList.add("active");
+    changelogModal.setAttribute("aria-hidden", "false");
+    if (versionBtn) {
+      versionBtn.setAttribute("aria-expanded", "true");
+    }
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeChangelog() {
+    if (!changelogModal) return;
+    changelogModal.classList.remove("active");
+    changelogModal.setAttribute("aria-hidden", "true");
+    if (versionBtn) {
+      versionBtn.setAttribute("aria-expanded", "false");
+    }
+    document.body.style.overflow = "";
+  }
+
+  if (versionBtn) {
+    versionBtn.addEventListener("click", openChangelog);
+  }
+
+  if (btnCloseChangelog) {
+    btnCloseChangelog.addEventListener("click", closeChangelog);
+  }
+
+  if (btnBottomCloseChangelog) {
+    btnBottomCloseChangelog.addEventListener("click", closeChangelog);
+  }
+
+  if (changelogModal) {
+    changelogModal.addEventListener("click", (e) => {
+      if (e.target === changelogModal) {
+        closeChangelog();
+      }
+    });
+  }
+
   // ESCキーでモーダルを閉じる
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       if (lightboxModal && lightboxModal.classList.contains("active")) {
         closeLightbox();
+      } else if (changelogModal && changelogModal.classList.contains("active")) {
+        closeChangelog();
       } else if (confirmModal && confirmModal.classList.contains("active")) {
         confirmModal.classList.remove("active");
         confirmModal.setAttribute("aria-hidden", "true");
@@ -498,4 +608,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ページ初期化の実行
   initPage();
+  initChangelog();
 });
