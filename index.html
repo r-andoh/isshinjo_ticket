@@ -47,7 +47,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lism-css@1.0.1/dist/css/main.css">
 
   <!-- プロジェクト独自スタイルシート (Apple-like Clean White) -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=1.27.0">
 </head>
 <body>
 
@@ -299,16 +299,7 @@
 
     <!-- フッター -->
     <footer class="footer">
-      <div class="footer-version-wrapper">
-        <button type="button" id="versionBtn" class="footer-version-btn" aria-haspopup="dialog" aria-expanded="false" aria-controls="changelogModal" title="クリックでアップデート履歴を表示">
-          <span class="version-label">v1.26.0</span>
-          <span class="version-icon" aria-hidden="true">ⓘ</span>
-        </button>
-        <div id="versionTooltip" class="version-tooltip" role="tooltip" aria-hidden="true">
-          <span class="tooltip-badge">最新</span>
-          <span class="tooltip-text" id="versionTooltipText">v1.26.0: フッターに更新履歴モーダル＆最新ホバー表示を追加</span>
-        </div>
-      </div>
+      <p id="versionBtn" class="footer-version" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false" aria-controls="changelogModal" title="最新 (v1.27.0): フッターのミニマルデザイン維持＆更新履歴ホバー・ポップアップ表示へ刷新&#10;（クリックで全履歴を表示）">v1.27.0</p>
     </footer>
   </main>
 
@@ -397,7 +388,7 @@
   </div>
 
   <!-- 4. アップデート履歴 モーダル -->
-  <div id="changelogModal" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="changelogModalTitle">
+  <div id="changelogModal" class="modal-overlay" style="display: none;" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="changelogModalTitle">
     <div class="modal-content changelog-modal-content">
       <div class="modal-header changelog-modal-header">
         <div class="changelog-header-text">
@@ -419,13 +410,19 @@
     </div>
   </div>
 
+  <!-- バージョン ホバー ツールチップ (フローティング) -->
+  <div id="versionTooltip" class="version-tooltip-floating" style="display: none;" role="tooltip" aria-hidden="true">
+    <span class="tooltip-badge">最新</span>
+    <span class="tooltip-text" id="versionTooltipText">v1.27.0: フッターのミニマルデザイン維持＆更新履歴ホバー・ポップアップ表示へ刷新</span>
+  </div>
+
   <!-- スクリーンリーダー用完了アナウンス領域 -->
   <div id="srAnnounce" class="sr-only" aria-live="polite" style="position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0;"></div>
 
   <!-- スクリプト -->
-  <script src="js/config.js"></script>
-  <script src="js/changelog.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/config.js?v=1.27.0"></script>
+  <script src="js/changelog.js?v=1.27.0"></script>
+  <script src="js/app.js?v=1.27.0"></script>
 
   <!-- Cloudflare Web Analytics -->
   <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7ff54a4a9a42474183c5d0f09f55cf06"}'></script>

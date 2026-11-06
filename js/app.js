@@ -55,9 +55,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // バージョン番号の反映
-    const versionLabel = document.querySelector(".version-label");
-    if (versionLabel && config.version) {
-      versionLabel.textContent = config.version;
+    const versionEl = document.getElementById("versionBtn");
+    if (versionEl && config.version) {
+      versionEl.textContent = config.version;
     }
 
     // イベント基本情報の反映
@@ -492,6 +492,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- 7. アップデート履歴 モーダル & ツールチップ制御 ---
   const versionBtn = document.getElementById("versionBtn");
+  const versionTooltip = document.getElementById("versionTooltip");
   const versionTooltipText = document.getElementById("versionTooltipText");
   const changelogModal = document.getElementById("changelogModal");
   const changelogList = document.getElementById("changelogList");
@@ -506,6 +507,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const latest = window.APP_CHANGELOG[0];
     if (versionTooltipText && latest) {
       versionTooltipText.textContent = `${latest.version}: ${latest.summary}`;
+    }
+    if (versionBtn && latest) {
+      versionBtn.setAttribute("title", `最新 (${latest.version}): ${latest.summary}\n（クリックで全履歴を表示）`);
     }
 
     if (changelogList) {
@@ -552,8 +556,45 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  function showVersionTooltip() {
+    if (!versionTooltip || !versionBtn) return;
+    if (changelogModal && changelogModal.classList.contains("active")) return;
+
+    const rect = versionBtn.getBoundingClientRect();
+    versionTooltip.style.display = "flex";
+    
+    // ツールチップ自体の幅を取得して中央揃え
+    const tooltipRect = versionTooltip.getBoundingClientRect();
+    const left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+    const bottom = window.innerHeight - rect.top + 10;
+    
+    // 画面端のはみ出し防止
+    const boundedLeft = Math.max(12, Math.min(left, window.innerWidth - tooltipRect.width - 12));
+    versionTooltip.style.left = `${boundedLeft}px`;
+    versionTooltip.style.bottom = `${bottom}px`;
+    versionTooltip.style.top = "auto";
+
+    requestAnimationFrame(() => {
+      versionTooltip.classList.add("visible");
+      versionTooltip.setAttribute("aria-hidden", "false");
+    });
+  }
+
+  function hideVersionTooltip() {
+    if (!versionTooltip) return;
+    versionTooltip.classList.remove("visible");
+    versionTooltip.setAttribute("aria-hidden", "true");
+    setTimeout(() => {
+      if (!versionTooltip.classList.contains("visible")) {
+        versionTooltip.style.display = "none";
+      }
+    }, 180);
+  }
+
   function openChangelog() {
     if (!changelogModal) return;
+    hideVersionTooltip();
+    changelogModal.style.display = "flex";
     changelogModal.classList.add("active");
     changelogModal.setAttribute("aria-hidden", "false");
     if (versionBtn) {
@@ -566,6 +607,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!changelogModal) return;
     changelogModal.classList.remove("active");
     changelogModal.setAttribute("aria-hidden", "true");
+    changelogModal.style.display = "none";
     if (versionBtn) {
       versionBtn.setAttribute("aria-expanded", "false");
     }
@@ -573,7 +615,17 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (versionBtn) {
+    versionBtn.addEventListener("mouseenter", showVersionTooltip);
+    versionBtn.addEventListener("mouseleave", hideVersionTooltip);
+    versionBtn.addEventListener("focus", showVersionTooltip);
+    versionBtn.addEventListener("blur", hideVersionTooltip);
     versionBtn.addEventListener("click", openChangelog);
+    versionBtn.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openChangelog();
+      }
+    });
   }
 
   if (btnCloseChangelog) {
