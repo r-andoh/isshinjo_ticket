@@ -188,7 +188,15 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- 2. バリデーション（入力検証） ---
   function validateEmail(email) {
     const re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/;
-    return re.test(email);
+    return email.length <= 254 && re.test(email);
+  }
+
+  function hasSuspiciousText(s) {
+    return /^[=+\-@＝＋－＠]|https?:|www\.|[<>]|\.(com|net|org|info|biz|jp|io|xyz|top|ru|cn)\b/i.test(s);
+  }
+
+  function hasLeadingFormulaChar(s) {
+    return /^[=+\-@＝＋－＠]/.test(s);
   }
 
   function setError(inputElement, errorElementId, message) {
@@ -206,15 +214,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // リアルタイムのエラー解消リスナー
-  [inputName, inputFurigana, inputEmail, selectSchedule, selectTicketType, selectTicketCount].forEach((el) => {
+  [inputName, inputFurigana, inputEmail, selectSchedule, selectTicketType, selectTicketCount, inputMessage].forEach((el) => {
     if (!el) return;
     el.addEventListener("input", () => {
       const errId = el.getAttribute("aria-describedby");
-      clearError(el, errId);
+      if (errId) clearError(el, errId);
     });
     el.addEventListener("change", () => {
       const errId = el.getAttribute("aria-describedby");
-      clearError(el, errId);
+      if (errId) clearError(el, errId);
     });
   });
 
@@ -230,8 +238,17 @@ document.addEventListener("DOMContentLoaded", () => {
     let firstErrorEl = null;
 
     // 氏名
-    if (!inputName.value.trim()) {
+    const nameVal = inputName.value.trim();
+    if (!nameVal) {
       setError(inputName, "nameError", "お名前を入力してください。");
+      isValid = false;
+      if (!firstErrorEl) firstErrorEl = inputName;
+    } else if (nameVal.length > 50) {
+      setError(inputName, "nameError", "お名前は50文字以内で入力してください。");
+      isValid = false;
+      if (!firstErrorEl) firstErrorEl = inputName;
+    } else if (hasSuspiciousText(nameVal)) {
+      setError(inputName, "nameError", "お名前にURLや使用できない記号（= + - @ < > 等）が含まれています。");
       isValid = false;
       if (!firstErrorEl) firstErrorEl = inputName;
     } else {
@@ -239,8 +256,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // フリガナ
-    if (!inputFurigana.value.trim()) {
+    const furiganaVal = inputFurigana.value.trim();
+    if (!furiganaVal) {
       setError(inputFurigana, "furiganaError", "フリガナを入力してください。");
+      isValid = false;
+      if (!firstErrorEl) firstErrorEl = inputFurigana;
+    } else if (furiganaVal.length > 50) {
+      setError(inputFurigana, "furiganaError", "フリガナは50文字以内で入力してください。");
+      isValid = false;
+      if (!firstErrorEl) firstErrorEl = inputFurigana;
+    } else if (hasSuspiciousText(furiganaVal)) {
+      setError(inputFurigana, "furiganaError", "フリガナに使用できない文字・記号が含まれています。");
       isValid = false;
       if (!firstErrorEl) firstErrorEl = inputFurigana;
     } else {
@@ -293,6 +319,22 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!firstErrorEl) firstErrorEl = selectTicketCount;
     } else {
       clearError(selectTicketCount, "ticketCountError");
+    }
+
+    // 備考（任意・最大500文字・先頭数式記号禁止）
+    if (inputMessage) {
+      const msgVal = inputMessage.value.trim();
+      if (msgVal.length > 500) {
+        setError(inputMessage, "messageError", "備考は500文字以内で入力してください。");
+        isValid = false;
+        if (!firstErrorEl) firstErrorEl = inputMessage;
+      } else if (hasLeadingFormulaChar(msgVal)) {
+        setError(inputMessage, "messageError", "備考の先頭に記号（= + - @）は使用できません。");
+        isValid = false;
+        if (!firstErrorEl) firstErrorEl = inputMessage;
+      } else {
+        clearError(inputMessage, "messageError");
+      }
     }
 
     // 注意事項への同意

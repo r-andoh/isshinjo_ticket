@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <meta name="description" content="ジェットラグプロデュース『一身上の都合により』安藤理樹扱い専用チケット予約フォームです。公演日程・券種・枚数をお選びいただき、お申し込みください。">
   <meta name="theme-color" content="#fbfbfd">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net data:; img-src 'self' https://r-andoh.github.io data:; connect-src 'self' https://cloudflareinsights.com https://*.cloudflareinsights.com; frame-src https://docs.google.com; form-action https://docs.google.com; base-uri 'self'; object-src 'none';">
   <title>ジェットラグ『一身上の都合により』｜チケット予約</title>
 
   <!-- 正規URL (Canonical) -->
@@ -47,7 +49,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lism-css@1.0.1/dist/css/main.css">
 
   <!-- プロジェクト独自スタイルシート (Apple-like Clean White) -->
-  <link rel="stylesheet" href="css/style.css?v=1.28.0">
+  <link rel="stylesheet" href="css/style.css?v=1.29.0">
 </head>
 <body>
 
@@ -202,7 +204,7 @@
             <label for="inputName">お名前</label>
             <span class="badge-required">必須</span>
           </div>
-          <input type="text" id="inputName" name="entry.2100160247" placeholder="例: 山田 太郎" autocomplete="name" required aria-describedby="nameError">
+          <input type="text" id="inputName" name="entry.2100160247" maxlength="50" placeholder="例: 山田 太郎" autocomplete="name" required aria-describedby="nameError">
           <p class="error-message" id="nameError" role="alert"></p>
         </div>
 
@@ -212,7 +214,7 @@
             <label for="inputFurigana">フリガナ</label>
             <span class="badge-required">必須</span>
           </div>
-          <input type="text" id="inputFurigana" name="entry.1689145255" placeholder="例: ヤマダ タロウ" required aria-describedby="furiganaError">
+          <input type="text" id="inputFurigana" name="entry.1689145255" maxlength="50" placeholder="例: ヤマダ タロウ" required aria-describedby="furiganaError">
           <p class="error-message" id="furiganaError" role="alert"></p>
         </div>
 
@@ -223,7 +225,7 @@
             <span class="badge-required">必須</span>
           </div>
           <p class="field-hint-text">※ご予約の控えおよび確定メールをお送りします。</p>
-          <input type="email" id="inputEmail" name="entry.1389300706" placeholder="example@domain.com" autocomplete="email" required aria-describedby="emailError">
+          <input type="email" id="inputEmail" name="entry.1389300706" maxlength="254" placeholder="example@domain.com" autocomplete="email" required aria-describedby="emailError">
           <p class="error-message" id="emailError" role="alert"></p>
         </div>
 
@@ -269,7 +271,8 @@
             <label for="inputMessage">備考</label>
             <span class="badge-optional">任意</span>
           </div>
-          <textarea id="inputMessage" name="entry.438285804" rows="3" placeholder="お席のご要望や領収書の有無、連絡事項などがございましたらご記入ください。"></textarea>
+          <textarea id="inputMessage" name="entry.438285804" rows="3" maxlength="500" aria-describedby="messageError" placeholder="お席のご要望や領収書の有無、連絡事項などがございましたらご記入ください。"></textarea>
+          <p class="error-message" id="messageError" role="alert"></p>
         </div>
 
         <!-- 注意事項・仮予約案内ボックス -->
@@ -299,7 +302,7 @@
 
     <!-- フッター -->
     <footer class="footer">
-      <p id="versionBtn" class="footer-version" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false" aria-controls="changelogModal" title="最新 (v1.28.0): アップデート履歴モーダルの静的プリレンダリング対応＆表示安定化&#10;（クリックで全履歴を表示）">v1.28.0</p>
+      <p id="versionBtn" class="footer-version" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false" aria-controls="changelogModal" title="最新 (v1.29.0): セキュリティ強化（CSP導入・入力検証強化・スキャナ誤爆防止）&#10;（クリックで全履歴を表示）">v1.29.0</p>
     </footer>
   </main>
 
@@ -404,8 +407,15 @@
         <ul class="changelog-timeline">
           <li class="changelog-item is-latest">
             <div class="changelog-item-header">
+              <span class="changelog-version">v1.29.0</span>
+              <span class="changelog-badge-latest">最新</span>
+              <span class="changelog-date">2026.11.07</span>
+            </div>
+            <p class="changelog-summary">セキュリティ強化（CSP導入・入力検証強化・スキャナ誤爆防止）</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
               <span class="changelog-version">v1.28.0</span>
-            <span class="changelog-badge-latest">最新</span>
               <span class="changelog-date">2026.11.07</span>
             </div>
             <p class="changelog-summary">アップデート履歴モーダルの静的プリレンダリング対応＆表示安定化</p>
@@ -611,16 +621,16 @@
   <!-- バージョン ホバー ツールチップ (フローティング) -->
   <div id="versionTooltip" class="version-tooltip-floating" style="display: none;" role="tooltip" aria-hidden="true">
     <span class="tooltip-badge">最新</span>
-    <span class="tooltip-text" id="versionTooltipText">v1.28.0: アップデート履歴モーダルの静的プリレンダリング対応＆表示安定化</span>
+    <span class="tooltip-text" id="versionTooltipText">v1.29.0: セキュリティ強化（CSP導入・入力検証強化・スキャナ誤爆防止）</span>
   </div>
 
   <!-- スクリーンリーダー用完了アナウンス領域 -->
   <div id="srAnnounce" class="sr-only" aria-live="polite" style="position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0;"></div>
 
   <!-- スクリプト -->
-  <script src="js/config.js?v=1.28.0"></script>
-  <script src="js/changelog.js?v=1.28.0"></script>
-  <script src="js/app.js?v=1.28.0"></script>
+  <script src="js/config.js?v=1.29.0"></script>
+  <script src="js/changelog.js?v=1.29.0"></script>
+  <script src="js/app.js?v=1.29.0"></script>
 
   <!-- Cloudflare Web Analytics -->
   <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7ff54a4a9a42474183c5d0f09f55cf06"}'></script>
