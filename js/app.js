@@ -602,8 +602,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  let tooltipRafId = null;
+
+  function canHoverWithFinePointer() {
+    return typeof window.matchMedia === "function" &&
+      window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  }
+
   function showVersionTooltip() {
     if (!versionTooltip || !versionBtn) return;
+    if (!canHoverWithFinePointer()) return;
     if (changelogModal && changelogModal.classList.contains("active")) return;
 
     const rect = versionBtn.getBoundingClientRect();
@@ -620,16 +628,29 @@ document.addEventListener("DOMContentLoaded", () => {
     versionTooltip.style.bottom = `${bottom}px`;
     versionTooltip.style.top = "auto";
 
-    requestAnimationFrame(() => {
+    if (tooltipRafId !== null) {
+      cancelAnimationFrame(tooltipRafId);
+    }
+    tooltipRafId = requestAnimationFrame(() => {
+      tooltipRafId = null;
+      if (changelogModal && changelogModal.classList.contains("active")) return;
       versionTooltip.classList.add("visible");
       versionTooltip.setAttribute("aria-hidden", "false");
     });
   }
 
-  function hideVersionTooltip() {
+  function hideVersionTooltip(immediate = false) {
     if (!versionTooltip) return;
+    if (tooltipRafId !== null) {
+      cancelAnimationFrame(tooltipRafId);
+      tooltipRafId = null;
+    }
     versionTooltip.classList.remove("visible");
     versionTooltip.setAttribute("aria-hidden", "true");
+    if (immediate) {
+      versionTooltip.style.display = "none";
+      return;
+    }
     setTimeout(() => {
       if (!versionTooltip.classList.contains("visible")) {
         versionTooltip.style.display = "none";
@@ -639,7 +660,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function openChangelog() {
     if (!changelogModal) return;
-    hideVersionTooltip();
+    hideVersionTooltip(true);
     changelogModal.style.display = "flex";
     changelogModal.classList.add("active");
     changelogModal.setAttribute("aria-hidden", "false");

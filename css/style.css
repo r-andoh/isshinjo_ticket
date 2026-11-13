@@ -840,6 +840,12 @@ textarea:focus {
   font-weight: 500;
 }
 
+@media (hover: none), (pointer: coarse) {
+  .version-tooltip-floating {
+    display: none !important;
+  }
+}
+
 /* アップデート履歴モーダル */
 .changelog-modal-content {
   max-width: 520px;

@@ -49,7 +49,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lism-css@1.0.1/dist/css/main.css">
 
   <!-- プロジェクト独自スタイルシート (Apple-like Clean White) -->
-  <link rel="stylesheet" href="css/style.css?v=1.29.0">
+  <link rel="stylesheet" href="css/style.css?v=1.30.0">
 </head>
 <body>
 
@@ -302,7 +302,7 @@
 
     <!-- フッター -->
     <footer class="footer">
-      <p id="versionBtn" class="footer-version" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false" aria-controls="changelogModal" title="最新 (v1.29.0): セキュリティ強化（CSP導入・入力検証強化・スキャナ誤爆防止）&#10;（クリックで全履歴を表示）">v1.29.0</p>
+      <p id="versionBtn" class="footer-version" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false" aria-controls="changelogModal" title="最新 (v1.30.0): スマホでのバージョンタップ時に更新履歴モーダルのみを表示するよう改善&#10;（クリックで全履歴を表示）">v1.30.0</p>
     </footer>
   </main>
 
@@ -407,8 +407,15 @@
         <ul class="changelog-timeline">
           <li class="changelog-item is-latest">
             <div class="changelog-item-header">
-              <span class="changelog-version">v1.29.0</span>
+              <span class="changelog-version">v1.30.0</span>
               <span class="changelog-badge-latest">最新</span>
+              <span class="changelog-date">2026.11.13</span>
+            </div>
+            <p class="changelog-summary">スマホでのバージョンタップ時に更新履歴モーダルのみを表示するよう改善</p>
+          </li>
+          <li class="changelog-item">
+            <div class="changelog-item-header">
+              <span class="changelog-version">v1.29.0</span>
               <span class="changelog-date">2026.11.07</span>
             </div>
             <p class="changelog-summary">セキュリティ強化（CSP導入・入力検証強化・スキャナ誤爆防止）</p>
@@ -621,16 +628,16 @@
   <!-- バージョン ホバー ツールチップ (フローティング) -->
   <div id="versionTooltip" class="version-tooltip-floating" style="display: none;" role="tooltip" aria-hidden="true">
     <span class="tooltip-badge">最新</span>
-    <span class="tooltip-text" id="versionTooltipText">v1.29.0: セキュリティ強化（CSP導入・入力検証強化・スキャナ誤爆防止）</span>
+    <span class="tooltip-text" id="versionTooltipText">v1.30.0: スマホでのバージョンタップ時に更新履歴モーダルのみを表示するよう改善</span>
   </div>
 
   <!-- スクリーンリーダー用完了アナウンス領域 -->
   <div id="srAnnounce" class="sr-only" aria-live="polite" style="position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0;"></div>
 
   <!-- スクリプト -->
-  <script src="js/config.js?v=1.29.0"></script>
-  <script src="js/changelog.js?v=1.29.0"></script>
-  <script src="js/app.js?v=1.29.0"></script>
+  <script src="js/config.js?v=1.30.0"></script>
+  <script src="js/changelog.js?v=1.30.0"></script>
+  <script src="js/app.js?v=1.30.0"></script>
 
   <!-- Cloudflare Web Analytics -->
   <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7ff54a4a9a42474183c5d0f09f55cf06"}'></script>
